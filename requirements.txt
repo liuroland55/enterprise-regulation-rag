@@ -1,0 +1,31 @@
+# Core LangChain and LangGraph
+# 移除具体小版本号，确保始终安装 PyPI 上的最新稳定版
+langchain
+langchain-openai
+langchain-ollama
+langgraph
+
+# Vector Database
+chromadb
+langchain-chroma
+
+# Configuration & Environment
+pydantic-settings
+python-dotenv
+
+# Document Loading
+# unstructured 依赖较多，建议保持最新以支持各种文件格式
+unstructured
+
+# Search (optional for web retrieval)
+duckduckgo-search
+
+# Streamlit GUI (新增)
+streamlit>=1.28.0
+
+# PDF Processing (新增)
+pypdf>=3.0.0
+
+# Utilities
+typing-extensions
+colorama
