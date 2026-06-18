@@ -1,0 +1,25 @@
+[package]
+name = "enterprise-regulation-rag-desktop"
+version = "0.1.0"
+description = "Enterprise Regulation RAG desktop shell"
+authors = ["Enterprise Regulation RAG"]
+edition = "2021"
+rust-version = "1.77.2"
+
+# 库目标：Tauri v2 将应用逻辑放在 lib 中，main.rs 仅作为入口转发
+[lib]
+name = "enterprise_regulation_rag_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+log = "0.4"
+
+[features]
+# 默认启用自定义协议（生产构建打包前端资源所需）
+custom-protocol = ["tauri/custom-protocol"]

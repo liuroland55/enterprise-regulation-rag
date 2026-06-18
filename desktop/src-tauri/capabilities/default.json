@@ -1,0 +1,6 @@
+{
+  "identifier": "default",
+  "description": "主窗口默认能力集（Tauri v2 权限）",
+  "windows": ["main"],
+  "permissions": ["core:default"]
+}

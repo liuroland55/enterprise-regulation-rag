@@ -29,3 +29,26 @@ pypdf>=3.0.0
 # Utilities
 typing-extensions
 colorama
+
+# ============================================================
+# Side-car Service (FastAPI) — enterprise-regulation-rag-desktop
+# 以下为侧车服务新增依赖，已 pin 到具体版本以保证可复现构建
+# ============================================================
+fastapi==0.115.6
+uvicorn==0.34.0
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+# Pin bcrypt to 4.0.1: passlib 1.7.4 is incompatible with bcrypt >= 5.x
+# (raises "password cannot be longer than 72 bytes" during backend init).
+bcrypt==4.0.1
+sqlmodel==0.0.22
+python-multipart==0.0.20
+# Filesystem watcher for automatic incremental indexing (./data → vector store)
+watchdog==4.0.2
+# Rich-document extraction for the KB (PDF/DOCX) — side-car only, RAG core untouched.
+# PDF 抽取复用根部已声明的 pypdf；此处补充 DOCX 抽取依赖 python-docx。
+python-docx==1.1.2
+
+# Testing (side-car)
+hypothesis==6.122.3
+pytest==8.3.4

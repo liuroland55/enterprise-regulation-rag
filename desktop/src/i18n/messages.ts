@@ -1,0 +1,506 @@
+// desktop/src/i18n/messages.ts
+// 集中式文案字典：以命名空间化的 key 组织所有用户可见字符串。
+// - 英文（en）为主/源语言，必须完整；中文（zh）覆盖相同的 key。
+// - 文案值支持简单插值占位符，如 {n} / {name} / {status}，由 t() 在运行时替换。
+// 命名一律使用英文；注释默认中文。
+
+import type { Lang } from "./types";
+
+// 文案字典：每种语言一份 key -> 文案 的映射（key 集合需保持一致）
+export const messages: Record<Lang, Record<string, string>> = {
+  // -------------------------------------------------------------------------
+  // 英文（默认 / 源语言）
+  // -------------------------------------------------------------------------
+  en: {
+    // 通用
+    "common.show": "Show",
+    "common.hide": "Hide",
+    "common.showPassword": "Show password",
+    "common.hidePassword": "Hide password",
+    "common.listSeparator": ", ",
+    "common.chooseFile": "Choose file",
+    "common.chooseFiles": "Choose files",
+
+    // 语言切换器
+    "lang.ariaLabel": "Language",
+
+    // 应用外壳 / 导航
+    "app.title": "Enterprise Regulation RAG",
+    "nav.chat": "Chat",
+    "nav.admin": "Admin",
+    "nav.logout": "Logout",
+    "nav.userInfo": "{name} ({role})",
+    "nav.defaultUser": "User",
+    "connecting.prefix": "Connecting to local service (side-car): ",
+
+    // 登录页
+    "login.subtitle": "Please sign in to continue",
+    "login.username": "Username",
+    "login.password": "Password",
+    "login.signIn": "Sign in",
+    "login.signingIn": "Signing in…",
+    "login.error.invalidCredentials": "Incorrect username or password. Please try again.",
+    "login.error.missingCredentials": "Please enter your username and password.",
+    "login.error.statusCode": "Sign-in failed (error code {status}). Please try again later.",
+    "login.error.network": "Unable to connect to the local service. Please confirm it is running and try again.",
+    "login.toggleToRegister": "No account? Register",
+    "login.toggleToLogin": "Have an account? Sign in",
+
+    // 注册页
+    "register.subtitle": "Create a new account",
+    "register.confirmPassword": "Confirm password",
+    "register.position": "Position (optional)",
+    "register.roleNote": "New accounts are created as regular employees.",
+    "register.submit": "Register",
+    "register.submitting": "Registering…",
+    "register.error.passwordMismatch": "The two passwords do not match.",
+    "register.error.conflict": "This username is already taken.",
+    "register.error.weakPassword": "Password must be at least 8 characters and include both letters and digits.",
+    "register.error.failed": "Registration failed. Please try again later.",
+
+    // 运行模式切换（LOCAL / API）
+    "mode.label": "Mode",
+    "mode.local": "Local",
+    "mode.api": "API (Cloud)",
+    "mode.confirmSwitch": "Switch to {mode} mode? This is a global setting that affects all users and requires a side-car restart to take effect.",
+    "mode.restartBanner": "Run mode changed to {mode}. Restart the side-car to apply (close the side-car window and re-run start_desktop).",
+    "mode.warningNoKey": "Note: OPENAI_API_KEY is not configured, so Cloud mode will run in a degraded state until you set it in .env.",
+    "mode.dismiss": "Dismiss",
+    "mode.switchFailed": "Failed to switch mode. Please try again.",
+
+    // 对话页（容器）
+    "chat.scopeHint":
+      "When selected, answers rely only on the chosen knowledge bases; if none are selected, all are searched; attaching temporary files makes this query rely only on those files (priority: temporary files > selected scope > all).",
+    "chat.tempFileNote": "Temporary files are used only for this/upcoming questions and are not added to the knowledge base.",
+    "chat.attachTempFile": "Attach temporary file",
+    "chat.removeTempFile": "Remove {name}",
+    "chat.error.queryFailedWithMessage": "Query failed: {message}",
+    "chat.error.sessionExpired": "Your session has expired. Please sign in again.",
+    "chat.error.queryFailed": "Query failed. Please try again later.",
+    "chat.newConversation": "New conversation",
+
+    // 对话窗口
+    "chat.empty": "Start asking a question",
+    "chat.inputPlaceholder": "Type your question…",
+    "chat.send": "Send",
+    "chat.querying": "Querying…",
+    "chat.thinking": "thinking....",
+    "chat.step.retrieve": "🔍 Retrieval round {n}: {k} snippet(s) retrieved",
+    "chat.step.generateYes": "💭 Round {n} generation & grading: sufficient evidence ✓",
+    "chat.step.generateNo": "💭 Round {n} generation & grading: insufficient evidence, preparing to rewrite",
+    "chat.step.rewrite": "✏️ Round {n} query rewrite, attempting to fill gaps",
+    "chat.step.default": "Processing…",
+
+    // 可信度徽章
+    "badge.verified": "✓ Verified · based on {n} regulation(s)",
+    "badge.unverified": "⚠ No clear basis found; manual confirmation recommended",
+    "confidence.title": "Confidence: {level}",
+    "confidence.high": "High",
+    "confidence.medium": "Medium",
+    "confidence.low": "Low",
+
+    // 溯源面板
+    "source.relevance": "Relevance: {level}",
+
+    // 开发者指标面板
+    "devMetrics.title": "Developer metrics",
+    "devMetrics.chunks": "Retrieved snippets: {n}",
+    "devMetrics.rawScores": "Raw scores: {scores}",
+    "devMetrics.tokenCost": "Token cost: {n}",
+    "devMetrics.latency": "End-to-end latency: {n} ms",
+    "devMetrics.retrieval": "Retrieval time: {n} ms",
+
+    // 用户画像卡
+    "profile.title": "Role Profile",
+    "profile.readOnly": "Read-only",
+    "profile.position": "Position",
+    "profile.noPosition": "Position not set",
+    "profile.mainTasks": "Main tasks",
+    "profile.noTasks": "Tasks not set",
+    "profile.hint": "The system prioritizes the company regulations most relevant to your position and tasks.",
+
+    // 知识库范围选择器
+    "kbScope.title": "Select knowledge base",
+    "kbScope.optional": "Optional · Multi-select",
+    "kbScope.empty": "No knowledge bases available",
+    "kbScope.selected": "Selected {n} knowledge base scope(s)",
+    "kbScope.none": "All knowledge bases are searched when none are selected",
+
+    // 历史会话
+    "history.loading": "Loading session history…",
+    "history.error": "Failed to load session history",
+    "history.empty": "No session history",
+    "history.delete": "Delete",
+    "history.deleteAria": "Delete this record",
+    "history.confirmDelete": "Delete this conversation record? This cannot be undone.",
+    "history.deleteFailed": "Failed to delete. Please try again.",
+
+    // 开发者模式开关
+    "developer.mode": "Developer mode",
+
+    // 管理后台
+    "admin.title": "Admin",
+    "admin.noPermission": "Access denied: only administrators can view this page.",
+    "admin.section.users": "User Management",
+    "admin.section.kb": "Knowledge Base Management",
+    "admin.section.history": "Query History (Audit)",
+    "adminHistory.col.user": "User",
+    "adminHistory.col.question": "Question",
+    "adminHistory.col.answer": "Answer",
+    "adminHistory.col.grade": "Grade",
+    "adminHistory.col.time": "Time",
+    "adminHistory.empty": "No query history yet.",
+    "adminHistory.loading": "Loading query history…",
+    "adminHistory.refresh": "Refresh",
+    "adminHistory.loadFailed": "Failed to load query history.",
+    "adminHistory.expand": "Expand",
+    "adminHistory.collapse": "Collapse",
+    "adminHistory.unknownUser": "Unknown",
+    "adminHistory.searchPlaceholder": "Search by username",
+    "adminHistory.sort.label": "Sort by",
+    "adminHistory.sort.name": "Username",
+    "adminHistory.sort.latest": "Latest query",
+    "adminHistory.group.count": "{count} record(s)",
+    "adminHistory.group.latest": "Latest: {time}",
+    "adminHistory.noMatch": "No users match your search.",
+    "admin.advancedNote":
+      "Note: the items above are forward-looking configuration (feature flags); the RAG core may currently ignore them. They are persisted locally for now.",
+
+    // 管理后台 - 知识库管理
+    "admin.kb.uploading": "Uploading…",
+    "admin.kb.uploadButton": "Upload document",
+    "admin.kb.reindex": "Rebuild index",
+    "admin.kb.reindexing": "Rebuilding…",
+    "admin.kb.col.filename": "File name",
+    "admin.kb.col.type": "Type",
+    "admin.kb.col.size": "Size",
+    "admin.kb.col.modified": "Modified",
+    "admin.kb.col.actions": "Actions",
+    "admin.kb.empty": "No documents.",
+    "admin.kb.delete": "Delete",
+    "admin.kb.note": "Note: deleting only removes the source file in ./data; the vector store becomes fully consistent only after a re-index.",
+    "admin.kb.uploadSuccess": "Uploaded \"{filename}\", added {count} chunk(s).",
+    "admin.kb.deleteSuccess": "Document \"{filename}\" deleted.",
+    "admin.kb.reindexSuccess": "Index rebuilt: {files} file(s), added {count} chunk(s).",
+    "admin.kb.confirmDelete": "Delete document \"{filename}\"? This action cannot be undone.",
+    "admin.kb.error.unsupportedType": "Unsupported file type. Supported: .txt/.md/.rst/.log/.pdf/.docx. Legacy .doc must be converted to .docx or PDF.",
+    "admin.kb.error.notFound": "The document does not exist or has been deleted.",
+    "admin.kb.error.forbidden": "Insufficient permissions: only administrators can perform this action.",
+    "admin.kb.error.badRequest": "Invalid file name. Please try again.",
+    "admin.kb.error.statusCode": "Operation failed (error code {status}).",
+    "admin.kb.error.load": "Failed to load the knowledge base list. Please try again later.",
+    "admin.kb.error.upload": "Upload failed. Please try again later.",
+    "admin.kb.error.delete": "Delete failed. Please try again later.",
+
+    // 管理后台 - 用户管理
+    "users.col.id": "ID",
+    "users.col.username": "Username",
+    "users.col.role": "Role",
+    "users.col.position": "Position",
+    "users.col.tasks": "Tasks",
+    "users.col.status": "Status",
+    "users.col.actions": "Actions",
+    "users.empty": "No users.",
+    "users.status.active": "Active",
+    "users.status.inactive": "Disabled",
+    "users.save": "Save",
+    "users.cancel": "Cancel",
+    "users.edit": "Edit",
+    "users.delete": "Delete",
+    "users.create.title": "Create user",
+    "users.create.button": "Create user",
+    "users.create.creating": "Creating…",
+    "users.create.roleHint": "Select \"admin\" to create an administrator account.",
+    "users.field.username": "Username",
+    "users.field.password": "Password",
+    "users.field.role": "Role",
+    "users.field.position": "Position",
+    "users.field.tasks": "Tasks (separate with commas or new lines)",
+    "users.tasksPlaceholder": "Separate with commas or new lines",
+    "users.placeholder.dash": "—",
+    "users.createSuccess": "User \"{name}\" created successfully.",
+    "users.updateSuccess": "User information updated.",
+    "users.deleteSuccess": "User \"{name}\" deleted.",
+    "users.confirmDelete": "Delete user \"{name}\"? This action cannot be undone.",
+    "users.error.missingFields": "Please enter a username and password.",
+    "users.error.conflict": "The username already exists. Please choose another and try again.",
+    "users.error.weakPassword": "The password does not meet the security policy (insufficient length/complexity). Please set a new one.",
+    "users.error.notFound": "The user does not exist or has been deleted.",
+    "users.error.forbidden": "Insufficient permissions: only administrators can perform this action.",
+    "users.error.statusCode": "Operation failed (error code {status}).",
+    "users.error.load": "Failed to load the user list. Please try again later.",
+    "users.error.create": "Failed to create the user. Please try again later.",
+    "users.error.update": "Failed to update the user. Please try again later.",
+    "users.error.delete": "Failed to delete the user. Please try again later.",
+
+    // 高级设置
+    "advanced.title": "Advanced Settings (Admin Only)",
+    "advanced.ariaLabel": "Advanced Settings",
+    "advanced.topK": "top_k (number of retrieved results)",
+    "advanced.reranker": "Enable Reranker",
+    "advanced.hybrid": "Enable Hybrid Search",
+    "advanced.futureFlag": "Future capability",
+    "advanced.featureHint": "Future capability (feature flag): not yet implemented in the RAG core; the API may carry this flag but the core may currently ignore it.",
+
+    // 系统监控 / 用量统计
+    "system.title": "System Monitoring / Usage (Admin)",
+    "system.ariaLabel": "System monitoring/usage",
+    "system.currentMode": "Current mode: {mode}",
+    "system.metric.totalQueries": "Total queries",
+    "system.metric.totalUsers": "Users",
+    "system.metric.totalTokens": "Total token usage",
+    "system.metric.totalCost": "Total cost",
+    "system.metric.avgLatency": "Average latency",
+    "system.referenceSuffix": " (for reference)",
+    "system.note.cloud": "CLOUD mode: token cost and latency are meaningful usage metrics.",
+    "system.note.local": "LOCAL (Ollama) mode: token cost and latency are for reference only.",
+    "system.placeholder": "No usage data yet (data wiring will be implemented in a later task).",
+  },
+
+  // -------------------------------------------------------------------------
+  // 中文（覆盖与英文一致的 key 集合）
+  // -------------------------------------------------------------------------
+  zh: {
+    // 通用
+    "common.show": "显示",
+    "common.hide": "隐藏",
+    "common.showPassword": "显示密码",
+    "common.hidePassword": "隐藏密码",
+    "common.listSeparator": "、",
+    "common.chooseFile": "选择文件",
+    "common.chooseFiles": "选择文件",
+
+    // 语言切换器
+    "lang.ariaLabel": "语言",
+
+    // 应用外壳 / 导航
+    "app.title": "企业条例 RAG 助手",
+    "nav.chat": "对话",
+    "nav.admin": "管理后台",
+    "nav.logout": "退出",
+    "nav.userInfo": "{name}（{role}）",
+    "nav.defaultUser": "用户",
+    "connecting.prefix": "正在连接本地服务（side-car）：",
+
+    // 登录页
+    "login.subtitle": "请登录以继续",
+    "login.username": "用户名",
+    "login.password": "密码",
+    "login.signIn": "登录",
+    "login.signingIn": "登录中…",
+    "login.error.invalidCredentials": "用户名或密码错误，请重试。",
+    "login.error.missingCredentials": "请输入用户名和密码。",
+    "login.error.statusCode": "登录失败（错误码 {status}），请稍后重试。",
+    "login.error.network": "无法连接到本地服务，请确认服务已启动后重试。",
+    "login.toggleToRegister": "没有账号？注册",
+    "login.toggleToLogin": "已有账号？登录",
+
+    // 注册页
+    "register.subtitle": "创建一个新账户",
+    "register.confirmPassword": "确认密码",
+    "register.position": "职位（可选）",
+    "register.roleNote": "新账户将注册为普通员工。",
+    "register.submit": "注册",
+    "register.submitting": "注册中…",
+    "register.error.passwordMismatch": "两次输入的密码不一致。",
+    "register.error.conflict": "该用户名已存在。",
+    "register.error.weakPassword": "密码至少 8 位，且需同时包含字母与数字。",
+    "register.error.failed": "注册失败，请稍后重试。",
+
+    // 运行模式切换（LOCAL / API）
+    "mode.label": "模式",
+    "mode.local": "本地",
+    "mode.api": "API（云端）",
+    "mode.confirmSwitch": "切换到「{mode}」模式？这是全局设置，将影响所有用户，且需重启侧车后生效。",
+    "mode.restartBanner": "运行模式已改为「{mode}」，请重启侧车后生效（关闭侧车窗口并重新运行 start_desktop）。",
+    "mode.warningNoKey": "注意：尚未配置 OPENAI_API_KEY，云端模式将以降级状态运行，直到在 .env 中填入密钥。",
+    "mode.dismiss": "知道了",
+    "mode.switchFailed": "切换模式失败，请稍后重试。",
+
+    // 对话页（容器）
+    "chat.scopeHint": "勾选后回答仅依据所选知识库；不勾选则检索全部；附加临时文件时本次仅依据临时文件（优先级：临时文件 > 勾选范围 > 全部）。",
+    "chat.tempFileNote": "临时文件仅用于本次/接下来的提问，不入库。",
+    "chat.attachTempFile": "附加临时文件",
+    "chat.removeTempFile": "移除 {name}",
+    "chat.error.queryFailedWithMessage": "查询失败：{message}",
+    "chat.error.sessionExpired": "登录已失效，请重新登录。",
+    "chat.error.queryFailed": "查询失败，请稍后重试。",
+    "chat.newConversation": "新建对话",
+
+    // 对话窗口
+    "chat.empty": "开始提问吧",
+    "chat.inputPlaceholder": "输入你的问题…",
+    "chat.send": "发送",
+    "chat.querying": "查询中…",
+    "chat.thinking": "thinking....",
+    "chat.step.retrieve": "🔍 第 {n} 轮检索：召回 {k} 条相关内容",
+    "chat.step.generateYes": "💭 第 {n} 轮生成与评分：依据充分 ✓",
+    "chat.step.generateNo": "💭 第 {n} 轮生成与评分：依据不足，准备改写",
+    "chat.step.rewrite": "✏️ 第 {n} 轮改写检索式，尝试补全信息",
+    "chat.step.default": "处理中…",
+
+    // 可信度徽章
+    "badge.verified": "✓ 已核验，依据 {n} 条条例",
+    "badge.unverified": "⚠ 未找到明确依据，建议人工确认",
+    "confidence.title": "可信度：{level}",
+    "confidence.high": "高",
+    "confidence.medium": "中",
+    "confidence.low": "低",
+
+    // 溯源面板
+    "source.relevance": "相关性：{level}",
+
+    // 开发者指标面板
+    "devMetrics.title": "开发者指标",
+    "devMetrics.chunks": "召回片段数：{n}",
+    "devMetrics.rawScores": "原始分数：{scores}",
+    "devMetrics.tokenCost": "Token 成本：{n}",
+    "devMetrics.latency": "端到端延迟：{n} ms",
+    "devMetrics.retrieval": "检索耗时：{n} ms",
+
+    // 用户画像卡
+    "profile.title": "岗位画像",
+    "profile.readOnly": "只读",
+    "profile.position": "职位",
+    "profile.noPosition": "未设置职位",
+    "profile.mainTasks": "主要任务",
+    "profile.noTasks": "未设置任务",
+    "profile.hint": "系统会依据你的岗位与任务，优先检索最相关的公司条例。",
+
+    // 知识库范围选择器
+    "kbScope.title": "选择知识库",
+    "kbScope.optional": "可选 · 多选",
+    "kbScope.empty": "暂无可选知识库",
+    "kbScope.selected": "已选择 {n} 个知识库范围",
+    "kbScope.none": "未选择时将检索全部知识库",
+
+    // 历史会话
+    "history.loading": "加载历史会话…",
+    "history.error": "历史会话加载失败",
+    "history.empty": "暂无历史会话",
+    "history.delete": "删除",
+    "history.deleteAria": "删除该记录",
+    "history.confirmDelete": "确认删除这条会话记录？该操作不可撤销。",
+    "history.deleteFailed": "删除失败，请重试。",
+
+    // 开发者模式开关
+    "developer.mode": "开发者模式",
+
+    // 管理后台
+    "admin.title": "管理后台",
+    "admin.noPermission": "无权限：仅管理员可访问该页面。",
+    "admin.section.users": "用户管理",
+    "admin.section.kb": "知识库管理",
+    "admin.section.history": "员工提问记录",
+    "adminHistory.col.user": "用户",
+    "adminHistory.col.question": "问题",
+    "adminHistory.col.answer": "回答",
+    "adminHistory.col.grade": "评级",
+    "adminHistory.col.time": "时间",
+    "adminHistory.empty": "暂无提问记录。",
+    "adminHistory.loading": "加载提问记录…",
+    "adminHistory.refresh": "刷新",
+    "adminHistory.loadFailed": "加载提问记录失败。",
+    "adminHistory.expand": "展开",
+    "adminHistory.collapse": "收起",
+    "adminHistory.unknownUser": "未知",
+    "adminHistory.searchPlaceholder": "按用户名检索",
+    "adminHistory.sort.label": "排序",
+    "adminHistory.sort.name": "名称",
+    "adminHistory.sort.latest": "最新提问时间",
+    "adminHistory.group.count": "{count} 条记录",
+    "adminHistory.group.latest": "最新：{time}",
+    "adminHistory.noMatch": "没有匹配的用户。",
+    "admin.advancedNote": "说明：以上为前瞻性配置项（feature flag），RAG 核心当前可能忽略这些标志，目前仅在本地持久化。",
+
+    // 管理后台 - 知识库管理
+    "admin.kb.uploading": "上传中…",
+    "admin.kb.uploadButton": "上传文档",
+    "admin.kb.reindex": "重建索引",
+    "admin.kb.reindexing": "重建中…",
+    "admin.kb.col.filename": "文件名",
+    "admin.kb.col.type": "类型",
+    "admin.kb.col.size": "大小",
+    "admin.kb.col.modified": "修改时间",
+    "admin.kb.col.actions": "操作",
+    "admin.kb.empty": "暂无文档。",
+    "admin.kb.delete": "删除",
+    "admin.kb.note": "说明：删除仅移除 ./data 中的源文件；向量库需重建索引（re-index）后才会完全一致。",
+    "admin.kb.uploadSuccess": "已上传「{filename}」，新增 {count} 个分块。",
+    "admin.kb.deleteSuccess": "文档「{filename}」已删除。",
+    "admin.kb.reindexSuccess": "已重建索引：{files} 个文件，新增 {count} 个分块。",
+    "admin.kb.confirmDelete": "确认删除文档「{filename}」？该操作不可撤销。",
+    "admin.kb.error.unsupportedType": "不支持的文件类型。支持：.txt/.md/.rst/.log/.pdf/.docx。旧版 .doc 请先转换为 .docx 或 PDF。",
+    "admin.kb.error.notFound": "文档不存在或已被删除。",
+    "admin.kb.error.forbidden": "权限不足：仅管理员可执行该操作。",
+    "admin.kb.error.badRequest": "文件名不合法，请重试。",
+    "admin.kb.error.statusCode": "操作失败（错误码 {status}）。",
+    "admin.kb.error.load": "加载知识库列表失败，请稍后重试。",
+    "admin.kb.error.upload": "上传失败，请稍后重试。",
+    "admin.kb.error.delete": "删除失败，请稍后重试。",
+
+    // 管理后台 - 用户管理
+    "users.col.id": "ID",
+    "users.col.username": "用户名",
+    "users.col.role": "角色",
+    "users.col.position": "职位",
+    "users.col.tasks": "任务",
+    "users.col.status": "状态",
+    "users.col.actions": "操作",
+    "users.empty": "暂无用户。",
+    "users.status.active": "启用",
+    "users.status.inactive": "停用",
+    "users.save": "保存",
+    "users.cancel": "取消",
+    "users.edit": "编辑",
+    "users.delete": "删除",
+    "users.create.title": "创建用户",
+    "users.create.button": "创建用户",
+    "users.create.creating": "创建中…",
+    "users.create.roleHint": "选择 “admin” 即可创建管理员账号。",
+    "users.field.username": "用户名",
+    "users.field.password": "密码",
+    "users.field.role": "角色",
+    "users.field.position": "职位",
+    "users.field.tasks": "任务（用逗号或换行分隔）",
+    "users.tasksPlaceholder": "用逗号或换行分隔",
+    "users.placeholder.dash": "—",
+    "users.createSuccess": "用户「{name}」创建成功。",
+    "users.updateSuccess": "用户信息已更新。",
+    "users.deleteSuccess": "用户「{name}」已删除。",
+    "users.confirmDelete": "确认删除用户「{name}」？该操作不可撤销。",
+    "users.error.missingFields": "请填写用户名与密码。",
+    "users.error.conflict": "用户名已存在，请更换后重试。",
+    "users.error.weakPassword": "密码不符合安全策略（长度/复杂度不足），请重新设置。",
+    "users.error.notFound": "用户不存在或已被删除。",
+    "users.error.forbidden": "权限不足：仅管理员可执行该操作。",
+    "users.error.statusCode": "操作失败（错误码 {status}）。",
+    "users.error.load": "加载用户列表失败，请稍后重试。",
+    "users.error.create": "创建用户失败，请稍后重试。",
+    "users.error.update": "更新用户失败，请稍后重试。",
+    "users.error.delete": "删除用户失败，请稍后重试。",
+
+    // 高级设置
+    "advanced.title": "高级设置（仅管理员）",
+    "advanced.ariaLabel": "高级设置",
+    "advanced.topK": "top_k（检索召回数量）",
+    "advanced.reranker": "启用 Reranker（重排序）",
+    "advanced.hybrid": "启用 Hybrid Search（混合检索）",
+    "advanced.futureFlag": "未来能力",
+    "advanced.featureHint": "未来能力（feature flag）：RAG 核心尚未实现，API 可携带该标志但核心当前可忽略。",
+
+    // 系统监控 / 用量统计
+    "system.title": "系统监控 / 用量统计（管理员）",
+    "system.ariaLabel": "系统监控/用量统计",
+    "system.currentMode": "当前模式：{mode}",
+    "system.metric.totalQueries": "累计查询次数",
+    "system.metric.totalUsers": "用户数",
+    "system.metric.totalTokens": "累计 Token 用量",
+    "system.metric.totalCost": "累计成本",
+    "system.metric.avgLatency": "平均延迟",
+    "system.referenceSuffix": "（仅供参考）",
+    "system.note.cloud": "CLOUD 模式：token 成本与延迟为有意义的用量指标。",
+    "system.note.local": "LOCAL（Ollama）模式：token 成本与延迟仅供参考。",
+    "system.placeholder": "暂无用量数据（数据接线将在后续任务中实现）。",
+  },
+};
